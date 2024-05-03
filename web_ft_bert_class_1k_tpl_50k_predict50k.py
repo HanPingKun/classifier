@@ -12,9 +12,9 @@ from rxnfp.models import SmilesClassificationModel
 logger = logging.getLogger(__name__)
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
-with open('data/rxnclass2id.json', 'r') as f:
+with open('rxnclass2id.json', 'r') as f:
     rxnclass2id = json.load(f)
-with open('data/rxnclass2name.json', 'r') as f:
+with open('rxnclass2name.json', 'r') as f:
     rxnclass2name = json.load(f)
 all_classes =sorted(rxnclass2id.keys())
 train_model_path =  'out/bert_class_1k_tpl+50k'
@@ -44,9 +44,9 @@ def process_smiles(smiles):
     return  predicted_class_id,rxn_str_id, class_name
 
 def process_smiles_batch(eval_df):
-    with open('data/rxnclass2id.json', 'r') as f:
+    with open('rxnclass2id.json', 'r') as f:
         rxnclass2id = json.load(f)
-    with open('data/rxnclass2name.json', 'r') as f:
+    with open('rxnclass2name.json', 'r') as f:
         rxnclass2name = json.load(f)
     results = []
     data_to_predict = eval_df['rxn'].values.tolist()
