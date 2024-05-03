@@ -17,7 +17,7 @@ with open('rxnclass2id.json', 'r') as f:
 with open('rxnclass2name.json', 'r') as f:
     rxnclass2name = json.load(f)
 all_classes =sorted(rxnclass2id.keys())
-train_model_path =  'out/bert_class_1k_tpl+50k'
+train_model_path =  'bert_class_1k_tpl+50k'
 model = SmilesClassificationModel("bert", train_model_path, use_cuda=torch.cuda.is_available())
 def process_smiles(smiles):
     y_preds = model.predict(smiles)
