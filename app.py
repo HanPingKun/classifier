@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify, send_file, render_template
 import pandas as pd
 import web_ft_bert_class_1k_tpl_50k_predict50k
@@ -24,11 +25,13 @@ def predict_smile():
 def upload_file():
     file = request.files['file']
     if file and file.filename.endswith('.tsv'):
-        path = "/home/hpk/rxnfp-master/out/data/save" + file.filename
+        out_dir = os.path.join(os.getcwd(), 'out', 'data', 'save')
+        os.makedirs(out_dir, exist_ok=True)
+        path = os.path.join(out_dir, file.filename)
         file.save(path)
         df = pd.read_csv(path, sep='\t')
         results_df = web_ft_bert_class_1k_tpl_50k_predict50k.process_smiles_batch(df)
-        output_path = "/home/hpk/rxnfp-master/out/data/output/results.csv"
+        output_path = os.path.join(os.getcwd(), 'out', 'data', 'output', 'results.csv')
         results_df.to_csv(output_path, index=False)
         return send_file(output_path, as_attachment=True)
 
