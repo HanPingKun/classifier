@@ -31,7 +31,9 @@ def upload_file():
         file.save(path)
         df = pd.read_csv(path, sep='\t')
         results_df = web_ft_bert_class_1k_tpl_50k_predict50k.process_smiles_batch(df)
-        output_path = os.path.join(os.getcwd(), 'out', 'data', 'output', 'results.csv')
+        output_dir = os.path.join(os.getcwd(), 'out', 'data', 'output')
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, 'results.csv')
         results_df.to_csv(output_path, index=False)
         return send_file(output_path, as_attachment=True)
 
